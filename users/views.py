@@ -2,7 +2,8 @@ from rest_framework import generics, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from .serializers import SignupSerializer
-
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import CustomTokenObtainPairSerializer
 
 class SignupView(generics.CreateAPIView):
     serializer_class = SignupSerializer
@@ -29,3 +30,6 @@ class SignupView(generics.CreateAPIView):
                 }
             }
         }, status=201)
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer    

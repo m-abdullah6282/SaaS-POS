@@ -2,6 +2,7 @@ from rest_framework import serializers
 from django.db import transaction
 from tenants.models import Tenant
 from .models import User
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class SignupSerializer(serializers.Serializer):
@@ -28,3 +29,18 @@ class SignupSerializer(serializers.Serializer):
                 tenant=tenant,
             )
         return user
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        data['user'] = {
+            'id': str(self.user.id),
+            'name': self.user.name,
+            'email': self.user.email,
+            'role': self.user.role,
+            'tenant': {
+                'id': str(self.user.tenant.id),
+                'store_name': self.user.tenant.store_name,
+                'category': self.user.tenant.category,
+            } if self.user.tenant else None
+        }
+        return data
