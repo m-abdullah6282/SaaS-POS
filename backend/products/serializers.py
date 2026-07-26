@@ -5,11 +5,11 @@ from .models import Product
 
 class ProductSerializer(serializers.ModelSerializer):
     price = serializers.DecimalField(
-        max_digits=10, decimal_places=2,
+        max_digits=12, decimal_places=2,
         validators=[MinValueValidator(0)]
     )
     cost_price = serializers.DecimalField(
-        max_digits=10, decimal_places=2,
+        max_digits=12, decimal_places=2,
         validators=[MinValueValidator(0)]
     )
 
