@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import { formatPkr } from '../utils/currency';
 
 const OrderCreate = () => {
     const [products, setProducts] = useState([]);
@@ -117,7 +118,7 @@ const OrderCreate = () => {
                                 <option value="" disabled>Select a product...</option>
                                 {products.map(p => (
                                     <option key={p.id} value={p.id}>
-                                        {p.name} - ${parseFloat(p.price).toFixed(2)} (Stock: {p.stock})
+                                        {p.name} - {formatPkr(p.price)} (Stock: {p.stock})
                                     </option>
                                 ))}
                             </select>
@@ -153,12 +154,12 @@ const OrderCreate = () => {
                                         <div>
                                             <p className="font-medium">{item.name}</p>
                                             <p className="text-sm text-gray-500">
-                                                {item.quantity} x ${item.price.toFixed(2)}
+                                                {item.quantity} x {formatPkr(item.price)}
                                             </p>
                                         </div>
                                         <div className="flex items-center gap-4">
                                             <span className="font-medium text-gray-900">
-                                                ${(item.quantity * item.price).toFixed(2)}
+                                                {formatPkr(item.quantity * item.price)}
                                             </span>
                                             <button 
                                                 onClick={() => handleRemoveItem(item.product_id)}
@@ -172,7 +173,7 @@ const OrderCreate = () => {
                             </ul>
                             <div className="flex justify-between items-center text-lg font-bold mb-4">
                                 <span>Total:</span>
-                                <span>${orderTotal.toFixed(2)}</span>
+                                <span>{formatPkr(orderTotal)}</span>
                             </div>
                             <button 
                                 onClick={handleSubmitOrder}

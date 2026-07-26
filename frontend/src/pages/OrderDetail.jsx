@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../api/axios';
+import { formatPkr } from '../utils/currency';
 
 const OrderDetail = () => {
     const { id } = useParams();
@@ -62,10 +63,10 @@ const OrderDetail = () => {
                             {order.items?.map((item) => (
                                 <tr key={item.id} className="hover:bg-gray-50">
                                     <td className="px-4 py-3 border-b text-sm text-gray-900">{item.product_name}</td>
-                                    <td className="px-4 py-3 border-b text-sm text-gray-900 text-right">${parseFloat(item.price_at_sale).toFixed(2)}</td>
+                                    <td className="px-4 py-3 border-b text-sm text-gray-900 text-right">{formatPkr(item.price_at_sale)}</td>
                                     <td className="px-4 py-3 border-b text-sm text-gray-900 text-right">{item.quantity}</td>
                                     <td className="px-4 py-3 border-b text-sm font-medium text-gray-900 text-right">
-                                        ${(parseFloat(item.price_at_sale) * item.quantity).toFixed(2)}
+                                        {formatPkr(parseFloat(item.price_at_sale) * item.quantity)}
                                     </td>
                                 </tr>
                             ))}
@@ -73,7 +74,7 @@ const OrderDetail = () => {
                         <tfoot>
                             <tr>
                                 <td colSpan="3" className="px-4 py-4 text-right font-bold text-lg">Total Amount:</td>
-                                <td className="px-4 py-4 text-right font-bold text-lg">${parseFloat(order.total_amount).toFixed(2)}</td>
+                                <td className="px-4 py-4 text-right font-bold text-lg">{formatPkr(order.total_amount)}</td>
                             </tr>
                         </tfoot>
                     </table>
