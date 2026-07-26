@@ -23,49 +23,49 @@ const OrderDetail = () => {
         fetchOrder();
     }, [id]);
 
-    if (loading) return <div className="p-8 text-gray-500">Loading order...</div>;
-    if (error) return <div className="p-8 text-red-600">{error}</div>;
-    if (!order) return <div className="p-8 text-gray-500">Order not found.</div>;
+    if (loading) return <div className="p-8 text-slate-500 dark:text-slate-400">Loading order...</div>;
+    if (error) return <div className="p-8 text-rose-700 dark:text-rose-200">{error}</div>;
+    if (!order) return <div className="p-8 text-slate-500 dark:text-slate-400">Order not found.</div>;
 
     return (
-        <div className="container mx-auto p-4 md:p-8">
+        <div className="container mx-auto p-4 py-8 md:p-8">
             <div className="mb-6">
-                <Link to="/orders" className="text-blue-600 hover:underline">&larr; Back to Orders</Link>
+                <Link to="/orders" className="text-sm font-medium text-indigo-700 hover:text-indigo-600 dark:text-indigo-300 dark:hover:text-indigo-200">&larr; Back to Orders</Link>
             </div>
             
-            <div className="bg-white p-6 rounded shadow mb-8">
-                <div className="flex flex-col md:flex-row justify-between mb-6 border-b pb-4">
+            <div className="mb-8 rounded-lg border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
+                <div className="mb-6 flex flex-col justify-between border-b border-slate-200 pb-4 dark:border-slate-800 md:flex-row">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Order Details</h1>
-                        <p className="text-sm text-gray-500 mt-1">ID: {order.id}</p>
+                        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Order Details</h1>
+                        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">ID: {order.id}</p>
                     </div>
                     <div className="mt-4 md:mt-0 text-left md:text-right">
-                        <p className="text-sm text-gray-500">Created At</p>
-                        <p className="font-medium text-gray-900">{new Date(order.created_at).toLocaleString()}</p>
+                        <p className="text-sm text-slate-500 dark:text-slate-400">Created At</p>
+                        <p className="font-medium text-slate-800 dark:text-slate-100">{new Date(order.created_at).toLocaleString()}</p>
                         {order.created_by_name && (
-                            <p className="text-sm text-gray-500 mt-1">By: {order.created_by_name}</p>
+                            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">By: {order.created_by_name}</p>
                         )}
                     </div>
                 </div>
 
-                <h2 className="text-lg font-semibold mb-4">Items</h2>
+                <h2 className="mb-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Items</h2>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
-                        <thead className="bg-gray-50">
+                        <thead className="bg-slate-50 dark:bg-slate-950/70">
                             <tr>
-                                <th className="px-4 py-2 border-b text-sm font-medium text-gray-500">Product</th>
-                                <th className="px-4 py-2 border-b text-sm font-medium text-gray-500 text-right">Price</th>
-                                <th className="px-4 py-2 border-b text-sm font-medium text-gray-500 text-right">Qty</th>
-                                <th className="px-4 py-2 border-b text-sm font-medium text-gray-500 text-right">Subtotal</th>
+                                <th className="border-b border-slate-200 px-4 py-2 text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">Product</th>
+                                <th className="border-b border-slate-200 px-4 py-2 text-right text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">Price</th>
+                                <th className="border-b border-slate-200 px-4 py-2 text-right text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">Qty</th>
+                                <th className="border-b border-slate-200 px-4 py-2 text-right text-sm font-medium text-slate-500 dark:border-slate-800 dark:text-slate-400">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
                             {order.items?.map((item) => (
-                                <tr key={item.id} className="hover:bg-gray-50">
-                                    <td className="px-4 py-3 border-b text-sm text-gray-900">{item.product_name}</td>
-                                    <td className="px-4 py-3 border-b text-sm text-gray-900 text-right">{formatPkr(item.price_at_sale)}</td>
-                                    <td className="px-4 py-3 border-b text-sm text-gray-900 text-right">{item.quantity}</td>
-                                    <td className="px-4 py-3 border-b text-sm font-medium text-gray-900 text-right">
+                                <tr key={item.id} className="transition hover:bg-slate-50 dark:hover:bg-slate-800/60">
+                                    <td className="border-b border-slate-100 px-4 py-3 text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200">{item.product_name}</td>
+                                    <td className="border-b border-slate-100 px-4 py-3 text-right text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200">{formatPkr(item.price_at_sale)}</td>
+                                    <td className="border-b border-slate-100 px-4 py-3 text-right text-sm text-slate-700 dark:border-slate-800 dark:text-slate-200">{item.quantity}</td>
+                                    <td className="border-b border-slate-100 px-4 py-3 text-right text-sm font-medium text-slate-700 dark:border-slate-800 dark:text-slate-200">
                                         {formatPkr(parseFloat(item.price_at_sale) * item.quantity)}
                                     </td>
                                 </tr>
@@ -73,8 +73,8 @@ const OrderDetail = () => {
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colSpan="3" className="px-4 py-4 text-right font-bold text-lg">Total Amount:</td>
-                                <td className="px-4 py-4 text-right font-bold text-lg">{formatPkr(order.total_amount)}</td>
+                                <td colSpan="3" className="px-4 py-4 text-right text-lg font-bold text-slate-900 dark:text-slate-100">Total Amount:</td>
+                                <td className="px-4 py-4 text-right text-lg font-bold text-slate-900 dark:text-slate-100">{formatPkr(order.total_amount)}</td>
                             </tr>
                         </tfoot>
                     </table>

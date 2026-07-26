@@ -1,5 +1,6 @@
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from './ThemeToggle';
 
 const Layout = () => {
     const { user, tenant, logout } = useAuth();
@@ -12,21 +13,23 @@ const Layout = () => {
     };
 
     const isActive = (path) => {
-        return location.pathname.startsWith(path) ? "text-cyan-300 font-bold" : "text-slate-400 hover:text-white";
+        return location.pathname.startsWith(path)
+            ? 'font-medium text-indigo-700 dark:text-indigo-300'
+            : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100';
     };
 
     return (
-        <div className="min-h-screen flex flex-col bg-slate-950">
+        <div className="flex min-h-screen flex-col bg-[#faf9f6] text-slate-900 dark:bg-slate-950 dark:text-slate-100">
             {/* Navbar */}
-            <nav className="border-b border-slate-800 bg-slate-950 text-white">
-                <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-                    <div className="flex items-center gap-6">
-                        <Link to="/" className="text-xl font-bold tracking-wider">
+            <nav className="border-b border-slate-200 bg-[#faf9f6]/95 text-slate-900 dark:border-slate-800 dark:bg-slate-950/95 dark:text-slate-100">
+                <div className="container mx-auto flex items-center justify-between px-4 py-3">
+                    <div className="flex items-center gap-8">
+                        <Link to="/" className="text-base font-semibold tracking-normal">
                             {tenant ? tenant.store_name : 'POS System'}
                         </Link>
                         
                         {user && (
-                            <div className="hidden md:flex gap-5 text-sm">
+                            <div className="hidden gap-5 text-sm md:flex">
                                 <Link to="/dashboard" className={isActive('/dashboard')}>Dashboard</Link>
                                 <Link to="/products" className={isActive('/products')}>Products</Link>
                                 <Link to="/orders" className={isActive('/orders')}>Orders</Link>
@@ -34,28 +37,32 @@ const Layout = () => {
                         )}
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
                         {user ? (
                             <>
-                                <span className="text-sm text-slate-400 hidden sm:inline-block">
+                                <span className="hidden text-sm text-slate-500 dark:text-slate-400 sm:inline-block">
                                     {user.name} ({user.role})
                                 </span>
+                                <ThemeToggle />
                                 <button 
                                     onClick={handleLogout}
-                                    className="px-3 py-1 bg-rose-500 hover:bg-rose-400 rounded-lg text-sm font-medium transition-colors"
+                                    className="rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                                 >
                                     Logout
                                 </button>
                             </>
                         ) : (
-                            <Link to="/login" className="text-slate-400 hover:text-white">Login</Link>
+                            <>
+                                <ThemeToggle />
+                                <Link to="/login" className="text-sm text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">Login</Link>
+                            </>
                         )}
                     </div>
                 </div>
                 
                 {/* Mobile Navigation */}
                 {user && (
-                    <div className="md:hidden border-t border-slate-800 bg-slate-900 px-4 py-2 flex gap-4">
+                    <div className="flex gap-4 border-t border-slate-200 px-4 py-2 text-sm dark:border-slate-800 md:hidden">
                         <Link to="/dashboard" className={`text-sm ${isActive('/dashboard')}`}>Dashboard</Link>
                         <Link to="/products" className={`text-sm ${isActive('/products')}`}>Products</Link>
                         <Link to="/orders" className={`text-sm ${isActive('/orders')}`}>Orders</Link>
@@ -69,7 +76,7 @@ const Layout = () => {
             </main>
             
             {/* Footer */}
-            <footer className="border-t border-slate-800 bg-slate-950 text-slate-500 text-center py-4 text-sm mt-auto">
+            <footer className="mt-auto border-t border-slate-200 py-4 text-center text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
                 &copy; {new Date().getFullYear()} POS System. All rights reserved.
             </footer>
         </div>

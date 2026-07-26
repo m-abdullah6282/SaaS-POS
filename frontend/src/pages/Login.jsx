@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import ThemeToggle from '../components/ThemeToggle';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,40 +22,44 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
-                <h2 className="text-2xl font-bold text-center">Login</h2>
-                {error && <p className="text-sm text-red-600 bg-red-100 p-2 rounded">{error}</p>}
+        <div className="relative flex min-h-screen items-center justify-center bg-[#faf9f6] px-4 py-10 dark:bg-slate-950">
+            <div className="absolute right-5 top-5"><ThemeToggle /></div>
+            <div className="w-full max-w-sm space-y-6 rounded-lg border border-slate-200 bg-white p-7 dark:border-slate-800 dark:bg-slate-900">
+                <div>
+                    <p className="text-sm font-medium text-indigo-700 dark:text-indigo-300">Welcome back</p>
+                    <h2 className="mt-1 text-2xl font-bold text-slate-900 dark:text-slate-100">Login</h2>
+                </div>
+                {error && <p className="rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700 dark:border-rose-400/20 dark:bg-rose-400/10 dark:text-rose-200">{error}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Email</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Email</label>
                         <input
                             type="email"
                             required
-                            className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-blue-200"
+                            className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Password</label>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-200">Password</label>
                         <input
                             type="password"
                             required
-                            className="w-full px-3 py-2 mt-1 border rounded-md focus:ring focus:ring-blue-200"
+                            className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+                        className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-indigo-500"
                     >
                         Sign In
                     </button>
                 </form>
-                <div className="text-sm text-center">
-                    Don't have an account? <Link to="/signup" className="text-blue-600 hover:underline">Sign up</Link>
+                <div className="text-sm text-slate-500 dark:text-slate-400">
+                    Don't have an account? <Link to="/signup" className="font-medium text-indigo-700 hover:text-indigo-600 dark:text-indigo-300 dark:hover:text-indigo-200">Sign up</Link>
                 </div>
             </div>
         </div>
