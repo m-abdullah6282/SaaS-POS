@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const BASE_URL = 'http://192.168.18.47:8000/api/';
+
 export const api = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: BASE_URL,
 });
 
 let accessToken = null;
@@ -40,13 +42,11 @@ api.interceptors.response.use(
 
             if (refreshToken) {
                 try {
-                    // Try to refresh token
-                    const res = await axios.post('http://localhost:8000/api/auth/token/refresh/', {
+                    const res = await axios.post(`${BASE_URL}auth/token/refresh/`, {
                         refresh: refreshToken
                     });
                     
                     accessToken = res.data.access;
-                    // Optional: If backend returns new refresh token, update it too
                     if (res.data.refresh) {
                         refreshToken = res.data.refresh;
                     }
@@ -54,12 +54,10 @@ api.interceptors.response.use(
                     originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                     return api(originalRequest);
                 } catch (refreshError) {
-                    // Refresh failed, log out
                     if (logoutCallback) logoutCallback();
                     return Promise.reject(refreshError);
                 }
             } else {
-                // No refresh token available
                 if (logoutCallback) logoutCallback();
             }
         }
